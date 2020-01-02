@@ -4,7 +4,6 @@
 /storage/*.key
 /vendor
 /.idea
-protest14.sql
 .env
 .env.backup
 .phpunit.result.cache
