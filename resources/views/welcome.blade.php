@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="title m-b-md">
+        Product catalog.
+    </div>
     <main role="main">
-
         <section class="jumbotron text-center">
             @if (count($products)!==0)
                 <div class="album py-5 bg-light">
