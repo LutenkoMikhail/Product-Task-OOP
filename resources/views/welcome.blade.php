@@ -1,27 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (count($products)!==0)
-        <div class="container">
-{{--            <div class="row justify-content-center">--}}
-{{--                <div class="col-md-12">--}}
-{{--                    <h3 class="text-center"> {{ __ ('All Department') }} </h3>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-12">--}}
-{{--                    <div class="album py-5 bg-light">--}}
-{{--                        <div class="container">--}}
-{{--                            <div class="row ">--}}
-{{--                                @each('department.parts.department_view',$departments,'department')--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-            {{count($products)}}
-        </div>
-    @else
-        <h3 class="text-center">
-            Product catalog is empty !
-        </h3>
-    @endif
+    <main role="main">
+
+        <section class="jumbotron text-center">
+            @if (count($products)!==0)
+                <div class="album py-5 bg-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @each('products.parts.product_view',$products,'product')
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    {{$products->links()}}
+                </div>
+
+            @else
+                <h3 class="text-center">
+                    Product catalog is empty !
+                </h3>
+            @endif
+        </section>
+    </main>
 @endsection
+

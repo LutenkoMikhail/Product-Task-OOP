@@ -10,8 +10,8 @@ class Author extends Model
         'id', 'name', 'surname'
     ];
 
-    public function products()
+    public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(\App\Product::class);
     }
 }

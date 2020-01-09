@@ -13,18 +13,37 @@ class Product extends Model
 
     public function gallery()
     {
-        return $this->belongsToMany(ProductGallery::class,
+        return $this->belongsToMany(\App\ProductGallery::class,
             'product_galleries',
             'product_id',
             'image_path')->withTimestamps();
     }
 
+    public function author()
+    {
+        return $this->belongsTo(\App\Author::class);
+    }
+
     public function category()
     {
-        return $this->belongsToMany(Category::class,
+        return $this->belongsToMany(\App\Category::class,
             'product_categories',
             'product_id',
             'category_id')->withTimestamps();
+    }
+
+    public function getNameAuthor()
+    {
+        $author = $this->author()->first(['name', 'surname']);
+        if (empty(!$author)){
+            return implode(" ", $author->toArray());;
+        }
+        return 'No author !';
+    }
+
+    public function getAllProductCategories()
+    {
+        return $this->category()->get();
     }
 
     public function setThumbnailAttribute($value)
