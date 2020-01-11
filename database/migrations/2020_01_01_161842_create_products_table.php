@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('author_id')->nullable();
+            $table->unsignedBigInteger('author_id')->unsigned()->nullable();
             $table->string('title', 50)->unique()->nullable();
             $table->string('description', 100);
             $table->string('short_description', 50);
@@ -23,13 +23,7 @@ class CreateProductsTable extends Migration
             $table->float('price')->unsigned();
             $table->text('thumbnail')->nullable();
             $table->timestamps();
-//            $table->foreign('author_id')->references('id')->on('authors');
-        });
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreign('author_id')
-                ->references('id')
-                ->on('authors')
-                ->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
         });
     }
 

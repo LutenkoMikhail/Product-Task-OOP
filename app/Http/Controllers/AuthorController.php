@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\Http\Requests\AuthorCreateRequest;
 use Illuminate\Support\Facades\Config;
 
 class AuthorController extends Controller
@@ -31,14 +32,54 @@ class AuthorController extends Controller
         );
     }
 
+    public function create()
+    {
+        return view('authors.create');
+    }
+
+    public function store(AuthorCreateRequest $request)
+    {
+        $author = new \App\Author();
+        $author->name = $request->name;
+        $author->surname = $request->surname;
+        if ($author->save()) {
+            return redirect()->route('authors');
+        }
+        return redirect()->back();
+    }
+
     public function edit(Author $author)
     {
-        dd($author);
+        return view('authors.edit',
+            [
+                'author' => $author
+            ]
+        );
     }
 
-    public function update(Author $author)
+    public function update(AuthorCreateRequest $request, Author $author)
     {
-        dd($author);
-    }
 
+        $author->name = $request->name;
+        $author->surname = $request->surname;
+        if ($author->save()) {
+            return redirect()->route('authors');
+        }
+        return redirect()->back();
+    }
+//    public function update(Author $author)
+//    {
+//        return view('sorry',
+//            [
+//                'nameClass' => __CLASS__,
+//                'nameMethod' => __METHOD__
+//            ]
+//        );
+//    }
+    public function delete(Author $author)
+    {
+        $author->product()->delete();
+        $author->delete();
+        return redirect()->route('authors');
+    }
 }

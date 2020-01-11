@@ -88,10 +88,10 @@
                 <div class="col-sm-4 offset-md-1 py-4">
 
                     <ol>
-                        <li><a href="{{ route('authors') }}"class="text-white">Authors</a></li>
+                        <li><a href="{{ route('authors') }}" class="text-white">Authors</a></li>
 
                         <ul>
-                            <li><a href="#" class="text-white">Add Author</a></li>
+                            <li><a href="{{route('author.create')}}" class="text-white">Add Author</a></li>
                         </ul>
                         <li><a href="#" class="text-white">Products</a></li>
                         <ul>
