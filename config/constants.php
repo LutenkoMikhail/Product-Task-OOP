@@ -9,5 +9,8 @@ return [
 
         'paginate_author_5' => 5,
         'paginate_author_10' => 10,
+
+        'paginate_category_5' => 5,
+        'paginate_category_10' => 10,
     ]
 ];
