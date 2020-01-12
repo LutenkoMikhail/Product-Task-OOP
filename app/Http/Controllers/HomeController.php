@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 {
-    protected $paginate;
 
     public function __construct()
     {

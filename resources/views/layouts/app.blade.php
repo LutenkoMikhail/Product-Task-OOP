@@ -98,9 +98,9 @@
                             <li><a href="#" class="text-white">Add Product</a></li>
                         </ul>
 
-                        <li><a href="#" class="text-white">Categories</a></li>
+                        <li><a href="{{route('categories')}}"  class="text-white">Categories</a></li>
                         <ul>
-                            <li><a href="#" class="text-white">Add Category</a></li>
+                            <li><a href="{{route('category.create')}}" class="text-white">Add Category</a></li>
                         </ul>
                     </ol>
                 </div>

@@ -13,3 +13,10 @@ Route::get('author/{author}/edit', 'AuthorController@edit')->name('author.edit')
 Route::post('author/{author}', 'AuthorController@update')->name('author.update');
 Route::get('author/{author}/delete', 'AuthorController@delete')->name('author.delete');
 
+Route::get('categories', 'CategoryController@index')->name('categories');
+Route::get('category/{category}', 'CategoryController@show')->name('category.show');
+Route::get('categories/create',  'CategoryController@create')->name('category.create');
+Route::post('categories/store', 'CategoryController@store')->name('category.store');
+Route::get('category/{category}/edit', 'CategoryController@edit')->name('category.edit');
+Route::post('category/{category}', 'CategoryController@update')->name('category.update');
+Route::get('category/{category}/delete', 'CategoryController@delete')->name('category.delete');

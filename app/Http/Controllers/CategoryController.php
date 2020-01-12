@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Author;
+
 use App\Category;
-use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\CategoryCreateRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
 class CategoryController extends Controller
 {
-    private $paginate;
+
 
     public function __construct()
     {
@@ -21,7 +19,6 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate($this->paginate);
-        dd($categories)
         return view('categories.index', [
             'categories' => $categories
         ]);
@@ -29,63 +26,63 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return view('sorry',
+        return view('categories.view',
             [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
+                'category' => $category
             ]
         );
     }
 
     public function create()
     {
-        return view('sorry',
+        $categories = Category::all();
+        return view('categories.create',
             [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+                'categories' => $categories
+            ]);
     }
 
     public function store(CategoryCreateRequest $request)
     {
-        return view('sorry',
-            [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+        $category = new \App\Category();
+        $category->name = $request->name;
+        if (!empty($request->selectcategory)) {
+            $category->parent_id = $request->selectcategory;
+        }
+        if ($category->save()) {
+            return redirect()->route('categories');
+        }
+        return redirect()->back();
     }
 
     public function edit(Category $category)
     {
-        return view('sorry',
+        $categories = Category::all();
+        return view('categories.edit',
             [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
+                'category' => $category,
+                'categories' => $categories
             ]
         );
     }
 
     public function update(CategoryCreateRequest $request, Category $category)
     {
-
-        return view('sorry',
-            [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+        $category->name = $request->name;
+        $category->parent_id = null;
+        if (!empty($request->selectcategory)) {
+            $category->parent_id = $request->selectcategory;
+        }
+        if ($category->save()) {
+            return redirect()->route('categories');
+        }
+        return redirect()->back();
     }
 
     public function delete(Category $category)
     {
-        return view('sorry',
-            [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+        $category->products()->delete();
+        $category->delete();
+        return redirect()->route('categories');
     }
-
 }

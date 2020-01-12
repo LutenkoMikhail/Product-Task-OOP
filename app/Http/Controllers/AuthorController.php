@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Config;
 
 class AuthorController extends Controller
 {
-    private $paginate;
 
     public function __construct()
     {
@@ -67,15 +66,7 @@ class AuthorController extends Controller
         }
         return redirect()->back();
     }
-//    public function update(Author $author)
-//    {
-//        return view('sorry',
-//            [
-//                'nameClass' => __CLASS__,
-//                'nameMethod' => __METHOD__
-//            ]
-//        );
-//    }
+
     public function delete(Author $author)
     {
         $author->product()->delete();

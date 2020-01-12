@@ -18,4 +18,13 @@ class Category extends Model
             'product_id'
         )->withTimestamps();
     }
+
+    public function getNameParent()
+    {
+        if ($this->parent_id !== null) {
+            return Category::find($this->parent_id)->name;
+        }
+        return 'Root category.';
+    }
+
 }

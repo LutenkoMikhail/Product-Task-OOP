@@ -10,4 +10,17 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $paginate;
+
 }
+
+//    public function update(Author $author)
+//    {
+//        return view('sorry',
+//            [
+//                'nameClass' => __CLASS__,
+//                'nameMethod' => __METHOD__
+//            ]
+//        );
+//    }

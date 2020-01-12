@@ -6,19 +6,19 @@
             <div class="col-md-12">
                 <h3 class="text-center"> {{ __ ('All Categories.') }} </h3>
             </div>
-            @if (count($caterogies)!==0)
+            @if (count($categories)!==0)
                 <div class="col-md-12">
                     <div class="album py-5 bg-light">
                         <div class="container">
                             <div class="row ">
-                                @each('categories.index',$caterogies,'caterogy')
+                                @each('categories.parts.category',$categories,'category')
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-8">
-                    {{$caterogies->links()}}
+                    {{$categories->links()}}
                 </div>
         </div>
         @else
