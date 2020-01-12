@@ -11,10 +11,15 @@
         <br>
         <p class="card-text">{{$product->short_description}}</p>
         <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-                <button type="button" class="btn btn-sm btn btn-success">View</button>
-                <button type="button" class="btn btn-sm btn-btn btn-warning">Edit</button>
-                <button type="button" class="btn btn-sm btn btn-danger">Delete</button>
+            <div class="center">
+                <div class="btn-group">
+                    <a href="{{ route('product.show', $product->id) }}"
+                       class="btn btn-sm btn btn-success">{{ __('View') }}</a>
+                    <a href="{{ route('product.edit', $product->id) }}"
+                       class="btn btn-sm btn-btn btn-warning">{{ __('Edit') }}</a>
+                    <a href="{{ route('product.delete', $product->id) }}"
+                       class="btn btn-sm btn btn-danger">{{ __('Delete') }}</a>
+                </div>
             </div>
             <small class="text-muted">Price : {{$product->price}} </small>
         </div>
@@ -24,15 +29,15 @@
             </div>
         </h5>
         <h5>
-        <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">Date : {{$product->created_at}} </small>
-        </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Date : {{$product->created_at}} </small>
+            </div>
         </h5>
-            <h5>
-        <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">Category :</small>
-        </div>
-            </h5>
+        <h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">Category :</small>
+            </div>
+        </h5>
         @if(!empty($product->getAllProductCategories()))
             @each('categories.parts.category_view', $product->getAllProductCategories(), 'category')
         @endif

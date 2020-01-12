@@ -24,10 +24,9 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('sorry',
+        return view('products.view',
             [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
+                'product' => $product
             ]
         );
     }

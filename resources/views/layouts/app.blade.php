@@ -93,9 +93,9 @@
                         <ul>
                             <li><a href="{{route('author.create')}}" class="text-white">Add Author</a></li>
                         </ul>
-                        <li><a href="#" class="text-white">Products</a></li>
+                        <li><a href="{{route('products')}}" class="text-white">Products</a></li>
                         <ul>
-                            <li><a href="#" class="text-white">Add Product</a></li>
+                            <li><a href="{{route('product.create')}}" class="text-white">Add Product</a></li>
                         </ul>
 
                         <li><a href="{{route('categories')}}"  class="text-white">Categories</a></li>

@@ -20,3 +20,11 @@ Route::post('categories/store', 'CategoryController@store')->name('category.stor
 Route::get('category/{category}/edit', 'CategoryController@edit')->name('category.edit');
 Route::post('category/{category}', 'CategoryController@update')->name('category.update');
 Route::get('category/{category}/delete', 'CategoryController@delete')->name('category.delete');
+
+Route::get('products', 'ProductController@index')->name('products');
+Route::get('product/{product}', 'ProductController@show')->name('product.show');
+Route::get('products/create',  'ProductController@create')->name('product.create');
+Route::post('products/store', 'ProductController@store')->name('product.store');
+Route::get('product/{product}/edit', 'ProductController@edit')->name('product.edit');
+Route::post('product/{product}', 'ProductController@update')->name('product.update');
+Route::get('product/{product}/delete', 'ProductController@delete')->name('product.delete');
