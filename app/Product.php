@@ -43,6 +43,12 @@ class Product extends Model
         return $this->category()->get();
     }
 
+    public function getImageFromGallery()
+    {
+        return $this->galleries()->get('image_path');
+
+    }
+
     public function setThumbnailAttribute($value)
     {
         if (is_string($value)) {

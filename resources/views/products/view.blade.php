@@ -8,26 +8,26 @@
             </div>
             <br>
             <div class="row justify-content-center">
-            @if( Storage::has ($product->thumbnail))
-                <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="card-img-top"
-                     style="max-width: 45%; margin: 0 auto; display: block;">
-            @endif
+                @if( Storage::has ($product->thumbnail))
+                    <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="card-img-top"
+                         style="max-width: 45%; margin: 0 auto; display: block;">
+                @endif
             </div>
             <hr>
             <div class="card-body">
                 <h2>
                     <p class="card-text">Title : {{$product->title}}</p>
-                <br>
+                    <br>
                     <p class="card-text">Description: {{$product->description}}</p>
-                <br>
+                    <br>
                     <p class="card-text">Short description: {{$product->short_description}}</p>
-                <hr>
+                    <hr>
                     <p class="card-text">SKU: {{$product->sku}}</p>
-                <br>
+                    <br>
                     <p class="card-text">Price: {{$product->price}}</p>
-                <br>
+                    <br>
                     <p class="card-text">Date: {{$product->created_at}}</p>
-                <hr>
+                    <hr>
 
                     <p class="card-text">Author: {{$product->getNameAuthor()}}</p>
                 </h2>
@@ -41,12 +41,16 @@
                     @each('categories.parts.category_view', $product->getAllProductCategories(), 'category')
                 @endif
                 <hr>
-                <h2>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">Gallery:</small>
-                    </div>
-                </h2>
-                <hr>
+                @if($product->getImageFromGallery()->isNotEmpty())
+                    <h2>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Gallery:</small>
+                        </div>
+                        @each('products.parts.product_view_image', $product->getImageFromGallery(), 'image')
+                    </h2>
+                    <hr>
+                @endif
+
                 <div class="center">
                     <div class="btn-group">
                         <a href="{{ url()->previous() }}"

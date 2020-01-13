@@ -24,7 +24,6 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        dd($product->galleries()->get('image_path'));
         return view('products.view',
             [
                 'product' => $product
