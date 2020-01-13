@@ -11,12 +11,9 @@ class Product extends Model
         'price', 'thumbnail'
     ];
 
-    public function gallery()
+    public function galleries()
     {
-        return $this->belongsToMany(\App\ProductGallery::class,
-            'product_galleries',
-            'product_id',
-            'image_path')->withTimestamps();
+        return $this->hasMany(\App\ProductGallery::class);
     }
 
     public function author()
@@ -35,7 +32,7 @@ class Product extends Model
     public function getNameAuthor()
     {
         $author = $this->author()->first(['name', 'surname']);
-        if (empty(!$author)){
+        if (empty(!$author)) {
             return implode(" ", $author->toArray());;
         }
         return 'No author !';

@@ -2,8 +2,10 @@
 Скачать и распаковать архив проекта.
 
 Выполнить команду :php artisan migrate.
+
 Выполнить команду :php artisan db:seed.
 
+Выполнить команду :php artisan storage:link
 
 Основные задачи:
 

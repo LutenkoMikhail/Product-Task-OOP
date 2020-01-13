@@ -10,11 +10,8 @@ class ProductGallery extends Model
         'id', 'image_path', 'product_id'
     ];
 
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany(Product::class,
-            'product_galleries',
-            'image_path',
-            'product_id')->withTimestamps();
+        return $this->belongsTo(Product::class)->withTimestamps();
     }
 }
