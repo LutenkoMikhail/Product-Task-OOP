@@ -9,7 +9,7 @@
             <br>
             <div class="row justify-content-center">
                 @if( Storage::has ($product->thumbnail))
-                    <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="card-img-top"
+                    <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="img-thumbnail"
                          style="max-width: 45%; margin: 0 auto; display: block;">
                 @endif
             </div>

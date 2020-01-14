@@ -1,7 +1,7 @@
 <div class="card mb-4 shadow-sm">
 
     @if( Storage::has ($product->thumbnail))
-        <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="card-img-top"
+        <img src="{{ Storage::url($product->thumbnail) }}" height="155" width="225" class="img-fluid"
              style="max-width: 45%; margin: 0 auto; display: block;">
     @endif
     <div class="card-body">
