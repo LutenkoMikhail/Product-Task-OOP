@@ -7,8 +7,10 @@ use App\Category;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Product;
+use App\ProductCategory;
 use App\ProductGallery;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -47,39 +49,37 @@ class ProductController extends Controller
 
     public function store(ProductCreateRequest $request)
     {
-        {
-            $pathThumbnail = $request->thumbnail->store(
-                "/images/products/{$request->sku}",
-                'public'
-            );
+        $pathThumbnail = $request->thumbnail->store(
+            "/images/products/{$request->sku}",
+            'public'
+        );
 
-            $product = new \App\Product();
-            $product->title = $request->title;
-            $product->description = $request->description;
-            $product->short_description = $request->short_description;
-            $product->sku = $request->sku;
-            $product->price = $request->price;
-            $product->thumbnail = $pathThumbnail;
-            $product->author_id = $request->selectauthor;
+        $product = new \App\Product();
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->short_description = $request->short_description;
+        $product->sku = $request->sku;
+        $product->price = $request->price;
+        $product->thumbnail = $pathThumbnail;
+        $product->author_id = $request->selectauthor;
 
-            if ($product->save()) {
-                foreach ($request->selectcategory as $categoryID) {
-                    $product->category()->attach(
-                        $categoryID
+        if ($product->save()) {
+            foreach ($request->selectcategory as $categoryID) {
+                $product->category()->attach(
+                    $categoryID
+                );
+            }
+
+            if (!empty($request->productgalleries)) {
+                foreach ($request->productgalleries as $productgallery) {
+                    $pathProductGallery = $productgallery->store(
+                        "/images/products/{$request->sku}",
+                        'public'
                     );
-                }
-
-                if (!empty($request->productgalleries)) {
-                    foreach ($request->productgalleries as $productgallery) {
-                        $pathProductGallery = $productgallery->store(
-                            "/images/products/{$request->sku}",
-                            'public'
-                        );
-                        $gallery = new \App\ProductGallery();
-                        $gallery->image_path = $pathProductGallery;
-                        $gallery->product_id = $product->id;
-                        $gallery->save();
-                    }
+                    $gallery = new \App\ProductGallery();
+                    $gallery->image_path = $pathProductGallery;
+                    $gallery->product_id = $product->id;
+                    $gallery->save();
                 }
             }
             return redirect()->route('products');
@@ -105,6 +105,7 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, Product $product)
     {
 
+        Storage::delete(Storage::allFiles( "/images/products/{$product->sku}"));
 
         $pathThumbnail = $request->thumbnail->store(
             "/images/products/{$request->sku}",
@@ -128,30 +129,30 @@ class ProductController extends Controller
                     $categoryID
                 );
             }
-        }
-
-        if (!empty($request->productgalleries)) {
-            foreach ($request->productgalleries as $productgallery) {
-                $pathProductGallery = $productgallery->store(
-                    "/images/products/{$request->sku}",
-                    'public'
-                );
-                $gallery = new \App\ProductGallery();
-                $gallery->image_path = $pathProductGallery;
-                $gallery->product_id = $product->id;
-                $gallery->save();
+            if (!empty($request->productgalleries)) {
+                foreach ($request->productgalleries as $productgallery) {
+                    $pathProductGallery = $productgallery->store(
+                        "/images/products/{$request->sku}",
+                        'public'
+                    );
+                    $gallery = new \App\ProductGallery();
+                    $gallery->image_path = $pathProductGallery;
+                    $gallery->product_id = $product->id;
+                    $gallery->save();
+                }
             }
+            return redirect()->route('products');
         }
-        return redirect()->route('products');
+        return redirect()->back();
     }
 
     public function delete(Product $product)
     {
-        return view('sorry',
-            [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+        ProductCategory::where('product_id', '=', $product->id)->delete();
+        ProductGallery::where('product_id', '=', $product->id)->delete();
+        Storage::delete(Storage::allFiles( "/images/products/{$product->sku}"));
+        $product->delete();
+        return redirect()->route('products');
+
     }
 }
