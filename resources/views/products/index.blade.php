@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <h3 class="text-center"> {{ __ ('All Products.') }} </h3>
             </div>
-            @if (count($categories)!==0)
+            @if (count($products)!==0)
                 <div class="col-md-12">
                     <div class="album py-5 bg-light">
                         <div class="container">
@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    {{$categories->links()}}
+                    {{$products->links()}}
                 </div>
         </div>
         @else

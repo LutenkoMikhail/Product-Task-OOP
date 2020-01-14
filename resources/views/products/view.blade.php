@@ -14,6 +14,7 @@
                 @endif
             </div>
             <hr>
+
             <div class="card-body">
                 <h2>
                     <p class="card-text">Title : {{$product->title}}</p>
@@ -31,16 +32,19 @@
 
                     <p class="card-text">Author: {{$product->getNameAuthor()}}</p>
                 </h2>
+
                 <hr>
                 <h2>
                     <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">Category :</small>
                     </div>
                 </h2>
+
                 @if(!empty($product->getAllProductCategories()))
                     @each('categories.parts.category_view', $product->getAllProductCategories(), 'category')
                 @endif
                 <hr>
+
                 @if($product->getImageFromGallery()->isNotEmpty())
                     <h2>
                         <div class="d-flex justify-content-between align-items-center">

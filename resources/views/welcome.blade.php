@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="title m-b-md">
-        Product catalog.
+        Top Products.
     </div>
     <main role="main">
         <section class="jumbotron text-center">

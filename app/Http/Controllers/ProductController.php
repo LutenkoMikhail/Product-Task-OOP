@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthorCreateRequest;
+use App\Author;
+use App\Category;
 use App\Http\Requests\ProductCreateRequest;
 use App\Product;
 use Illuminate\Support\Facades\Config;
@@ -17,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate($this->paginate);
-        return view('welcome', [
+        return view('products.index', [
             'products' => $products
         ]);
     }
@@ -33,23 +34,58 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('sorry',
+        $categories = Category::all();
+        $authors = Author::all();
+        return view('products.create',
             [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+                'categories' => $categories,
+                'authors' => $authors
+            ]);
     }
 
     public function store(ProductCreateRequest $request)
     {
-        return view('sorry',
-            [
-                'nameClass' => __CLASS__,
-                'nameMethod' => __METHOD__
-            ]
-        );
+//        dd($request);
+        {
+            $pathThumbnail = $request->thumbnail->store(
+                "/images/products/{$request->sku}",
+                'public'
+            );
+
+            $product = new \App\Product();
+            $product->title = $request->title;
+            $product->description = $request->description;
+            $product->short_description = $request->short_description;
+            $product->sku = $request->sku;
+            $product->price = $request->price;
+            $product->thumbnail = $pathThumbnail;
+            $product->author_id = $request->selectauthor;
+//            dd($product);
+
+            if ($product->save()) {
+                foreach ($request->selectcategory as $categoryID) {
+                    $product->category()->attach(
+                        $categoryID
+                    );
+                }
+
+                if (!empty($request->productgalleries)) {
+                    foreach ($request->productgalleries as $productgallery) {
+                        $pathProductGallery = $productgallery->store(
+                            "/images/products/{$request->sku}",
+                            'public'
+                        );
+                        $product->galleries()->attach(
+                            $pathProductGallery
+                        );
+                    }
+                }
+            }
+            return redirect()->route('products');
+        }
+        return redirect()->back();
     }
+
 
     public function edit(Product $product)
     {

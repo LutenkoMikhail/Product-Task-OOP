@@ -14,4 +14,9 @@ class Author extends Model
     {
         return $this->hasMany(\App\Product::class);
     }
+
+    public function getFullName()
+    {
+        return $this->name.'  '.$this->surname;
+    }
 }
