@@ -105,13 +105,13 @@ class ProductController extends Controller
     public function update(ProductUpdateRequest $request, Product $product)
     {
 
-        Storage::delete(Storage::allFiles( "/images/products/{$product->sku}"));
+        $this->deleteAllPictures($product->sku);
 
         $pathThumbnail = $request->thumbnail->store(
             "/images/products/{$request->sku}",
             'public'
         );
-
+     
         $product->title = $request->title;
         $product->description = $request->description;
         $product->short_description = $request->short_description;
@@ -150,9 +150,16 @@ class ProductController extends Controller
     {
         ProductCategory::where('product_id', '=', $product->id)->delete();
         ProductGallery::where('product_id', '=', $product->id)->delete();
-        Storage::delete(Storage::allFiles( "/images/products/{$product->sku}"));
+        $this->deleteAllPictures($product->sku);
         $product->delete();
         return redirect()->route('products');
-
     }
+
+    private function deleteAllPictures(string $sku): void
+    {
+        Storage::delete(Storage::allFiles(
+            Config::get('constants.images_products.path_images_products')
+            . $sku));
+    }
+
 }

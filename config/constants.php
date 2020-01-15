@@ -12,5 +12,9 @@ return [
 
         'paginate_category_5' => 5,
         'paginate_category_10' => 10,
-    ]
+    ],
+    'images_products'=>[
+      'path_images_products'=>"/images/products/",
+      'path_filesystem_drive'=>"public"
+]
 ];
